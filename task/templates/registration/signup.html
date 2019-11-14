@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Signup</title>
+
+    <!DOCTYPE html>
+<html>
+<head>
+    <title>signup details</title>
+<body>
+
+    <form method="post" action="{% url 'signup' %}">
+    {% csrf_token %}
+        {% for field in form %}
+        <p>
+            {{ field.label_tag }}<br>
+            {{ field }}
+
+        {% for error in field.errors %}
+        <p style="color: green"{{ error }}>
+        {% endfor %}
+        </p>
+        {% endfor %}
+        <p class="login button">
+        <input type="submit" value="signup" />&nbsp &nbsp
+            <a href="{% url 'login' %}" class="to_register">login</a>&nbsp &nbsp
+<br>
+<br>
+</p>
+</form> 
+{% for post in posts %}
+
+            <a href="{% url 'post_edit' post.pk %}">Edit</a> &nbsp 
+            <a href="{% url 'post_del' post.pk %}">Delete</a> &nbsp
+            <a href="{% url 'password_reset' %}">Forget Password</a> &nbsp 
+            <button type="button">Active!<a href="{% url 'active' %}"></a></button>&nbsp
+        <br>
+            Username- {{ post.username }}
+<br>
+
+            Email- {{ post.email}}
+            
+<br>
+            <br>
+            
+
+        {% endfor %}  
+</body>
+</html>   
+    
+
