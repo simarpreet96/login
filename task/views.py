@@ -1,14 +1,23 @@
 from django.shortcuts import render,redirect, get_object_or_404,get_list_or_404
 from .models import User
 from .forms import loginForm, SignUpForm
+from django.http import HttpResponse
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth import get_user_model
 from django.contrib.auth import authenticate
 
 
 def post_list(request):
-    posts = User.objects.filter()
-    return render(request,'registration/signup.html',{'posts': posts})
+    if request.user.is_authenticated:
+        if request.user.is_superuser == True:
+            posts = User.objects.filter()
+            print("hello")
+        else:
+            posts = User.objects.filter(is_superuser=False)
+            print("hello again")
+        return render(request, 'registration/signup.html', {'posts': posts})
+    else:
+        return HttpResponse('login please', content_type='text/plain')
 
 def post_del(requet, pk):
     post = get_object_or_404(User, pk=pk)
